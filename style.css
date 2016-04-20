@@ -1,0 +1,357 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700);
+body,html {
+  margin:0;
+  padding:0;
+  font-family:ubuntu;
+  background:#333343;
+  font-size:14px;
+  height:100%;
+}
+
+::-webkit-scrollbar {
+    width: .7em;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #334;
+  outline: 1px solid slategrey;
+}
+.black-overlay {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#112;
+  opacity:0.5;
+  z-index:2;
+}
+.container {
+  height:100%;
+  display:flex;
+  justify-content:center;
+  background:#333343;
+}
+.fa-star,.fa-star-o {
+  margin-right:2px;
+  font-size:.8rem;
+}
+.fa-star:hover,.fa-star-o:hover {
+  color:#ccccd4;
+}
+.play-button {
+  height:40px;
+  width:40px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#9999a4;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+.settings-buttons {
+    height:40px;
+  width:40px;
+  display:flex;
+  font-size:1.2rem;
+  justify-content:center;
+  align-items:center;
+  color:#9999a4;
+  position:relative;
+  cursor:pointer;
+}
+.active {
+  color:#77b;
+}
+.fa-retweet,.fa-random {
+  font-size:.9rem;
+}
+.settings-buttons i{
+  margin-right:20px;
+}
+#volume:hover + .volume-bar {
+  display:flex;
+}
+
+.skip-button {
+  height:40px;
+  width:20px;
+  display:flex;
+  font-size:1rem;
+  justify-content:center;
+  cursor:pointer;
+  align-items:center;
+  color:#9999a4;
+}
+.sidebar {
+  width:300px;
+  height:100%;
+}
+.current-song-title {
+  font-size:1.2rem;
+}
+.current-song-artist {
+  color:#77778a;
+  font-size:0.95rem;
+}
+.current-song-container {
+  display:flex;
+  flex-flow:column;
+  width:100%;
+  align-items:center;
+  text-align:center;
+}
+.progress-bar {
+  width:100%;
+  box-sizing:border-box;
+  color:#9999a2;
+  justify-content:center;
+  height:80px;
+  display:flex;
+  flex-flow:column;
+  position:relative;
+  z-index:100;
+  background: #223;
+  padding-bottom:10px;
+}
+.progress-content {
+  display:flex;
+  padding-left:25px;
+  padding-right:25px;
+  box-sizing:border-box;
+}
+
+.track-list {
+  width:100%;
+  background:#112;
+  height:33.3333%;
+  position:relative;
+  z-index:10;
+  flex-grow:1;
+  padding-bottom:40px;
+  position:relative;
+}
+
+.song-table {
+  color:#9999a4;
+  width:100%;
+  border-collapse:collapse;
+}
+.searchbar {
+  height:50px;
+  background:#223;
+  z-index:10;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.search {
+  background:#112;
+  border:1px solid #33334a;
+  border-radius:15px;
+  width:100%;
+    color:#99a;
+  padding:5px 15px 5px 35px;
+  line-height:1.3em;
+  placeholder-color: #77778a;
+  transition:all .2s ease;
+  position:relative;
+  box-sizing:border-box;
+}
+.search-input {
+  width:400px;
+  position:relative;
+}
+.search-input:after {
+  content:'\f002';
+  font-family:'fontawesome';
+  position:absolute;
+  left:10px;
+  top:12px;
+  bottom:0;
+  margin:auto;
+  height:100%;
+  color:#77778a;
+  pointer-events:none;
+}
+.search:focus {
+  outline:none;
+  border-color:#66667a;
+  transition:all .2s ease;
+}
+::-webkit-input-placeholder {
+  color:#77778a;
+}
+.song-table tr:hover {
+  background:#1a1a2f;
+}
+.song-table tr.selected-song:hover {
+  background:#334;
+}
+.song-table tr:first-of-type td {
+  padding:10px;
+}
+.song-table tr td:first-of-type {
+  padding-left:80px;
+}
+
+.selected-song {
+  background:#334;
+}
+.table-head {
+  background:#223;
+  color:#9999a4;
+  width:100%;
+  padding-right:10px;
+}
+.table-head td {
+  padding:10px;
+}
+.table-head tr td:first-of-type {
+  padding-left:80px;
+}
+.song-table td{
+  padding:10px;
+}
+.table-wrapper {
+  height:100%;
+  overflow:auto;
+}
+
+.main {
+  display:flex;
+  flex-flow:column;
+  width:100%;
+  background:#223;
+  height:100%;
+}
+.album-container {
+  width:100%;
+  height:450px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+    position:relative;
+}
+.volume-bar {
+  height:160px;
+  width:40px;
+  background:#292939;
+  opacity:1;
+  display:flex;
+  justify-content:center;
+  flex-flow:column;
+  align-items:center;
+  position:absolute;
+  bottom:50px;
+  right:-22px;
+  display:none;
+  box-shadow: 2px 1px 0px 1px rgba(0,0,0,0.4);
+}
+.volume-bar:after {
+  content:'\f0d7';
+  font-family:'fontawesome';
+  color:#292939;
+  font-size:30px;
+  line-height:0;
+  height:0px;
+  width:0px;
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  text-align:center;
+  width:100%;
+  right:0;
+   text-shadow: 2px 1px rgba(0,0,0,0.4);
+
+  margin:auto;
+}
+.volume-bar:hover {
+  display:flex;
+}
+.volume-line {
+  background:#66a;
+  width:5px;
+  height:80%;
+}
+
+.album-background {
+width:100%;
+  height:100%;
+  opacity:1;
+filter: blur(12px);
+-webkit-filter: blur(12px);
+-moz-filter: blur(12px);
+-o-filter: blur(12px);
+-ms-filter: blur(12px);
+  -webkit-transform: translate3d(0, 0, 0);
+ background:url('https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg');
+  background-size:cover;
+  background-position:center;
+}
+table {
+  table-layout:fixed;
+}
+
+.album-background.overlay {
+  position:absolute;
+  z-index:2;
+  left:0;
+  top:0;
+  opacity:0;
+    -webkit-transform: translate3d(0, 0, 0);
+
+}
+.progress-line {
+  width:100%;
+  height:6px;
+  background:linear-gradient(to right,#337,#559,#66a);
+  position:relative;
+  margin-bottom:10px;
+}
+.progress-time {
+  display:flex;
+  margin-left:50px;
+  justfiy-content:center;
+  align-items:center;
+  top:5px;
+}
+#active-time {
+  color:#88c;
+}
+.progress-line-overlay {
+  width:40%;
+  right:0;
+  border-left:4px solid #77c;
+  position:absolute;
+  background:#335;
+  height:6px;
+  position:absolute;
+  top:0;
+  right:0;
+    transition:all .1s linear;
+}
+#active-time {
+  padding-right:5px;
+}
+#total-time {
+  padding-left:5px;
+}
+.album-image {
+  background: url('https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg');
+  height:300px;
+  width:300px;
+  position:absolute;
+  z-index:10;
+  top:0;
+  bottom:0;
+  background-size:cover;
+  box-shadow:0px 0px 30px 5px rgba(0,0,0,0.6);
+  margin:auto;
+  left:0;
+  right:0;
+}
