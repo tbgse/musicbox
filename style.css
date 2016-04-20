@@ -270,6 +270,15 @@ body,html {
 
   margin:auto;
 }
+.volume-bar:before {
+  content:'';
+  width:115%;
+  height:180px;
+  position:absolute;
+  background:transparent;
+  bottom:-30px;
+  left:-7.5%;
+}
 .volume-bar:hover {
   display:flex;
 }
@@ -277,6 +286,16 @@ body,html {
   background:#66a;
   width:5px;
   height:80%;
+  position:relative;
+}
+.volume-line-overlay {
+  position:absolute;
+  height:80%;
+  transition:all .2s linear;
+  width:100%;
+  top:0;
+  left:0;
+  background:#335;
 }
 
 .album-background {
@@ -355,6 +374,7 @@ table {
   box-shadow:0px 0px 30px 5px rgba(0,0,0,0.6);
 
 }
+
 .album-content-overlay {
   position:absolute;
   left:0;

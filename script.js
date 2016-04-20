@@ -66,7 +66,6 @@ var songs = [{
   image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png",
   videoId: "6p6PcFFUm5I"
 }]
-
 songs.forEach(function(song, num) {
   var tr = document.createElement('tr');
   var songName = document.createElement('td');
@@ -93,6 +92,7 @@ songs.forEach(function(song, num) {
   tr.id = 'song-' + num;
   tr.addEventListener('click', function(e) {
     if (activeSong !== parseInt(this.id.match(/\d/g).join(''))) {
+      pausedSong = false;
       updateSong(songs[parseInt(this.id.match(/\d/g).join(''))]);
     }
   })
@@ -135,7 +135,9 @@ document.getElementById('backward').addEventListener('click', function() {
     updateSong(songs[activeSong-1]);
   }
 })
-
+document.getElementById('volume-bar').addEventListener('click',function(e){
+  setVolume(e);
+})
 function fadeIn(elm, x) {
   if (x < 1) {
     x += 0.1;
@@ -151,6 +153,7 @@ function fadeIn(elm, x) {
 document.getElementById('play').addEventListener('click',function(){
   if(!playingSong){
     if (!pausedSong) {
+      player.seekTo(0,true);
       resetSongProgress();
     if (shuffle) {
       createRandomSongOrder();
@@ -223,7 +226,6 @@ function beautifySeconds(time){
 }
 function updateTime() {
   timeElapsed = player.getCurrentTime();
-  console.log(player.getCurrentTime());
           document.getElementById('active-time').innerHTML = beautifySeconds(timeElapsed);
 }
 function updateProgressbar() {
@@ -233,7 +235,6 @@ function updateProgressbar() {
 }
 function setProgressbar(e) {
   var factor = e.clientX / document.getElementById('progress-line').clientWidth ;
-  console.log(activeSongDuration * factor);
   timeElapsed = activeSongDuration * factor;
   player.seekTo(timeElapsed, true);
   updateProgressbar();
@@ -258,4 +259,77 @@ function nextSongShuffle(){
       createRandomSongOrder();
       shuffleCounter = 0;
     }
+}
+// 2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
+var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '300',
+    width: '500',
+    playerVars: {
+      controls:0,
+      enablejsapi:1,
+      showinfo:0,
+      rel:0,
+      iv_load_policy:3,
+      fs:0,
+      autoplay:0,
+      modestbranding:1,
+
+    },
+    videoId: 'G6VPRMZWMqc',
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+// 4. The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+
+}
+
+// 5. The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event) {
+  if (event.data === 1){
+    document.getElementById('total-time').innerHTML = beautifySeconds(player.getDuration());
+
+  }
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+    if(!playingSong){
+      player.seekTo(5,true)
+        player.pauseVideo();
+    }
+  }
+}
+function stopVideo() {
+  player.stopVideo();
+}
+
+function setVolume(e) {
+  if (e.layerY <= 0){
+  document.getElementById('volume-line-overlay').style.height = 0;
+  player.setVolume(100);
+  }
+  else if (e.layerY >= document.getElementById('volume-line').clientHeight) {
+    document.getElementById('volume-line-overlay').style.height = document.getElementById('volume-line').clientHeight + 'px';
+    player.setVolume(0);
+
+  } else {
+    document.getElementById('volume-line-overlay').style.height = (e.layerY-5) + 'px';
+    console.log(Math.floor(document.getElementById('volume-line').clientHeight- e.layerY/document.getElementById('volume-line').clientHeight*100))
+    player.setVolume(Math.floor(Math.floor(document.getElementById('volume-line').clientHeight- e.layerY/document.getElementById('volume-line').clientHeight*100)))
+  }
 }
