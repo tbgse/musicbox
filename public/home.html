@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel='stylesheet' type='text/css' href='style.css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+</head>
+<body>
+<div class='container'>
+  <div class='main'>
+    <div class='searchbar'><div class='search-input'><input class='search' placeholder='Search for songs, artists, albums...' id='search-field'></div></div>
+    <div class='album-container'>
+      <div class='album-content-overlay'>
+      <div class='album-image' id='album-image'></div>
+       <div id="player"></div>
+     </div>
+      <div class='album-background' id='album-background'></div>
+            <div class='album-background overlay' id='album-background-overlay'></div>
+      <div class='black-overlay'></div>
+    </div>
+    <div class='track-list'>
+           <table class='table-head'>
+                    <tr>
+            <td>Song</td>
+            <td>Artist</td>
+            <td>Album</td>
+            <td>Duration</td>
+            <td>Rating</td>
+          </tr>
+        </table>
+      <div class='table-wrapper'>
+      <table class='song-table'>
+        <tbody id='song-table'>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class='progress-bar'>
+      <div class='progress-line' id='progress-line'><div class='progress-line-overlay' id='progress-line-overlay'></div></div>
+      <div class='progress-content'>
+                 <div class='skip-button'><i class="fa fa-step-backward" id='backward' aria-hidden="true"></i></div>
+        <div class='play-button' id='play'><i class="fa fa-play" aria-hidden="true"></i>
+        </div>
+              <div class='skip-button' id='forward'><i class="fa fa-step-forward" aria-hidden="true"></i>
+        </div>
+        <div class='current-song-container'>
+          <div class='current-song-title' id='current-song-title'>Black Mambo</div>
+          <div class='current-song-artist' id='current-song-artist'>Glass Animals</div>
+        </div>
+          <div class='settings-buttons'><i class="fa fa-fw fa-retweet" id='loop' aria-hidden="true"></i><i class="fa fa-fw fa-random" aria-hidden="true" id='shuffle'></i><i class="fa fa-fw fa-volume-up" aria-hidden="true" id='volume'></i>
+            <div class='volume-bar' id='volume-bar'>+<div class='volume-line' id='volume-line'><div class='volume-line-overlay' id='volume-line-overlay'></div></div>-</div>
+      </div>
+        <div class='progress-time'><span id='active-time'>0:00</span>/<span id='total-time'>4:34</span></div>
+    </div>
+  </div>
+</div>
+<script src='bliss.js'></script>
+<script src='script.js'></script>
+</body>
+</html>
