@@ -14,42 +14,48 @@ var songs = [{
   album: "Zaba",
   duration: 214,
   rating: 4,
-  image: "https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg"
+  image: "https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg",
+  videoId: "DnUvBgC7RNY"
 }, {
   title: "Black Mambo",
   artist: "Glass Animals",
   album: "Zaba",
   duration: 249,
   rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg"
+  image: "https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg",
+  videoId: "H7bqZIpC3Pg"
 }, {
   title: "Stay Close",
   artist: "Flume",
   album: "Flume",
   duration: 176,
   rating: 5,
-  image: "https://upload.wikimedia.org/wikipedia/en/8/8e/Flume_album_artwork.jpg"
+  image: "https://upload.wikimedia.org/wikipedia/en/8/8e/Flume_album_artwork.jpg",
+  videoId: "IEnkzvJRbTw",
 }, {
   title: "Loud Places",
   artist: "Romy, Jamie xx",
   album: "In Colour",
   duration: 283,
   rating: 4,
-  image: "https://upload.wikimedia.org/wikipedia/en/c/c2/Jamie_xx_-_In_Colour.png"
+  image: "https://upload.wikimedia.org/wikipedia/en/c/c2/Jamie_xx_-_In_Colour.png",
+  videoId: "klSBZYfRc_U"
 }, {
   title: "You & Me (Flume Remix)",
   artist: "Disclosure, Flume",
   album: "Settle",
   duration: 280,
   rating: 5,
-  image: "https://upload.wikimedia.org/wikipedia/en/7/76/Disclosure_-_Settle.png"
+  image: "https://upload.wikimedia.org/wikipedia/en/7/76/Disclosure_-_Settle.png",
+  videoId: "_zPlr-o-YEQ"
 }, {
   title: "Retrograde",
   artist: "James Blake",
   album: "Overgrown",
   duration: 214,
   rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
+  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png",
+  videoId: "6p6PcFFUm5I"
 },
             {
   title: "Retrograde",
@@ -57,47 +63,8 @@ var songs = [{
   album: "Overgrown",
   duration: 214,
   rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
-},
-            {
-  title: "Retrograde",
-  artist: "James Blake",
-  album: "Overgrown",
-  duration: 214,
-  rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
-},
-            {
-  title: "Retrograde",
-  artist: "James Blake",
-  album: "Overgrown",
-  duration: 214,
-  rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
-},
-            {
-  title: "Retrograde",
-  artist: "James Blake",
-  album: "Overgrown",
-  duration: 214,
-  rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
-},
-            {
-  title: "Retrograde",
-  artist: "James Blake",
-  album: "Overgrown",
-  duration: 214,
-  rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
-},
-            {
-  title: "Retrograde",
-  artist: "James Blake",
-  album: "Overgrown",
-  duration: 214,
-  rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png"
+  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png",
+  videoId: "6p6PcFFUm5I"
 }]
 
 songs.forEach(function(song, num) {
@@ -134,6 +101,7 @@ songs.forEach(function(song, num) {
 document.getElementById('song-' + activeSong).classList.add('selected-song');
 
 function updateSong(song) {
+  player.loadVideoById(song.videoId);
      document.getElementById('song-' + activeSong).classList.remove('selected-song');
     document.getElementById('album-background-overlay').style.backgroundImage = 'url(' + songs[activeSong].image + ')';
     activeSong = songs.indexOf(song);
@@ -188,10 +156,13 @@ document.getElementById('play').addEventListener('click',function(){
       createRandomSongOrder();
     }
     }
+    player.playVideo();
     startSongProgress();
   document.getElementById('play').innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>'
   }
   else {
+    player.pauseVideo();
+
   pauseSong();
   }
 
@@ -251,6 +222,8 @@ function beautifySeconds(time){
   return min+":"+sec;
 }
 function updateTime() {
+  timeElapsed = player.getCurrentTime();
+  console.log(player.getCurrentTime());
           document.getElementById('active-time').innerHTML = beautifySeconds(timeElapsed);
 }
 function updateProgressbar() {
@@ -262,7 +235,7 @@ function setProgressbar(e) {
   var factor = e.clientX / document.getElementById('progress-line').clientWidth ;
   console.log(activeSongDuration * factor);
   timeElapsed = activeSongDuration * factor;
-  updateTime();
+  player.seekTo(timeElapsed, true);
   updateProgressbar();
 }
 

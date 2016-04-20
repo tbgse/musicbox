@@ -345,13 +345,26 @@ table {
   background: url('https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg');
   height:300px;
   width:300px;
-  position:absolute;
-  z-index:10;
-  top:0;
-  bottom:0;
   background-size:cover;
   box-shadow:0px 0px 30px 5px rgba(0,0,0,0.6);
-  margin:auto;
+
+
+}
+#player {
+  margin-left:50px;
+  box-shadow:0px 0px 30px 5px rgba(0,0,0,0.6);
+
+}
+.album-content-overlay {
+  position:absolute;
   left:0;
   right:0;
+  top:0;
+  bottom:0;
+  width:850px;
+  height:300px;
+  display:flex;
+  margin:auto;
+    z-index:10;
+    background:transparent;
 }
