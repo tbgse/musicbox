@@ -39,7 +39,7 @@ var songs = [{
   duration: 283,
   rating: 4,
   image: "https://upload.wikimedia.org/wikipedia/en/c/c2/Jamie_xx_-_In_Colour.png",
-  videoId: "klSBZYfRc_U"
+  videoId: "TP9luRtEqjc"
 }, {
   title: "You & Me (Flume Remix)",
   artist: "Disclosure, Flume",
@@ -273,7 +273,7 @@ var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '300',
-    width: '500',
+    width: '600',
     playerVars: {
       controls:0,
       enablejsapi:1,
