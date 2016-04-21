@@ -6,8 +6,13 @@
 </head>
 <body>
 <div class='container'>
+  <div class='sidebar' id='sidebar'>
+You haven't saved any playlists. Click here to save your current playlist.
+  </div>
   <div class='main'>
-    <div class='searchbar'><div class='search-input'><input class='search' placeholder='Search for songs, artists, albums...' id='search-field'></div></div>
+    <div class='searchbar'><div class='menu-buttons'><div class='playlist-button' id='playlist-button'><i class='fa fa-music'></i> My Playlists</div></div><div class='search-input'><input class='search' placeholder='Search for songs, artists, albums...' id='search-field'><div class='search-results'>
+      <ul id='search-list'></ul>
+    </div></div></div>
     <div class='album-container'>
       <div class='album-content-overlay'>
       <div class='album-image' id='album-image'></div>
@@ -16,6 +21,7 @@
       <div class='album-background' id='album-background'></div>
             <div class='album-background overlay' id='album-background-overlay'></div>
       <div class='black-overlay'></div>
+      <div class='black-overlay-2'></div>
     </div>
     <div class='track-list'>
            <table class='table-head'>
@@ -53,6 +59,8 @@
     </div>
   </div>
 </div>
+</div>
+
 <script src='bliss.js'></script>
 <script src='script.js'></script>
 </body>
