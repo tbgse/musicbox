@@ -1,6 +1,6 @@
 var activeSong = 1;
 var playingSong = false;
-var pausedSong = true;
+var pausedSong = false;
 var shuffleCounter = 0;
 var shuffle = false;
 var looped = false;
@@ -106,8 +106,6 @@ function updateSong(song) {
     document.getElementById('album-background-overlay').style.backgroundImage = 'url(' + songs[activeSong].image + ')';
     activeSong = songs.indexOf(song);
     resetSongProgress();
-  progressAmount = document.getElementById('progress-line').clientWidth/song.duration;
-  activeSongDuration = song.duration;
   document.getElementById('album-image').style.backgroundImage = 'url(' + song.image + ')';
   document.getElementById('album-background').style.backgroundImage = 'url(' + song.image + ')';
   document.getElementById('current-song-title').innerHTML = song.title;
@@ -116,7 +114,6 @@ function updateSong(song) {
     fadeIn(document.getElementById('album-background-overlay'), 0);
   });
   document.getElementById('song-' + activeSong).classList.add('selected-song');
-  document.getElementById('total-time').innerHTML = beautifySeconds(song.duration);
       document.getElementById('progress-line-overlay').style.transition = 'all .1s linear';
 
 }
@@ -273,7 +270,7 @@ var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '300',
-    width: '600',
+    width: '534',
     playerVars: {
       controls:0,
       enablejsapi:1,
@@ -304,14 +301,18 @@ function onPlayerReady(event) {
 var done = false;
 function onPlayerStateChange(event) {
   if (event.data === 1){
-    document.getElementById('total-time').innerHTML = beautifySeconds(player.getDuration());
-
+    var duration = player.getDuration();
+    document.getElementById('total-time').innerHTML = beautifySeconds(duration);
+    progressAmount = document.getElementById('progress-line').clientWidth/duration;
+    activeSongDuration = duration;
+    console.log(progressAmount)
   }
   if (event.data == YT.PlayerState.PLAYING && !done) {
     if(!playingSong){
       player.seekTo(5,true)
         player.pauseVideo();
     }
+
   }
 }
 function stopVideo() {
