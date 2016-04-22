@@ -86,17 +86,26 @@ body,html {
   background:#223;
   opacity:0.9;
 }
-.search-results ul {
-  margin:0;
-  list-style:none;
-  padding:0;
+.search-results table {
+  border-collapse:collapse;
+  width:100%;
 }
-.search-results ul li {
+
+.search-results td {
   margin:0;
   padding:10px;
   cursor:default;
 }
-.search-results ul li:hover {
+.search-results td:first-child {
+  width:80%;
+}
+.search-results td:last-child {
+  text-align:right;
+}
+.dark-text {
+  color:#99a;
+}
+.search-results tr:hover {
   background:#334;
 }
 body.active {

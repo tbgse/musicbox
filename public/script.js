@@ -5,6 +5,7 @@ var shuffleCounter = 0;
 var shuffle = false;
 var activeSearch = false;
 var searchTimeout;
+var searchResults = [];
 var looped = false;
 var randomSongOrder = [];
 var timeElapsed = 0;
@@ -212,7 +213,8 @@ function resetSongProgress() {
 }
 
 function beautifySeconds(time) {
-  if (isNaN(time)) return "0:00";
+  if (time === undefined || time === null) return "0:00";
+  else if (isNaN(time)) return time;
   var min = Math.floor(time / 60);
   var sec = Math.floor(time % 60);
   if (sec < 10) {
@@ -363,14 +365,25 @@ $('#search-field').addEventListener('keyup', function(e) {
 
 function showYoutubeSearchResults(results) {
   var item;
+  searchResults = [];
   var searchNode = $('#search-list');
   while (searchNode.firstChild) {
     searchNode.removeChild(searchNode.firstChild);
   }
   results.forEach(function(x) {
-    console.log(x)
-    item = $.create("li", {
-      contents: x.snippet.title
+    searchResults.push(x);
+    item = $.create("tr", {
+      contents: [
+        {
+          tag:"td",
+          contents: x.snippet.title,
+      },
+      {
+      tag:"td",
+      className:"dark-text",
+      contents:convertYouTubeTimestamp(x.duration)
+    }
+      ],
     })
     $('#search-list').appendChild(item);
   })
@@ -391,6 +404,30 @@ $.delegate($("#song-table"), "click", "tr", function(e) {
   }
 });
 
+$.delegate($("#search-list"),"click","tr",function(e){
+  console.log(e.target.parentNode)
+  console.log(e.target.parentNode.previousSibling)
+  var i = 0;
+  var x = e.target.parentNode;
+  while (x !== null){
+    i++
+    x = x.previousSibling;
+  }
+  var selectedSong = searchResults[i-1];
+  songs.push({
+    title: selectedSong.snippet.title,
+    artist: selectedSong.snippet.channelTitle,
+    duration: convertYouTubeTimestamp(selectedSong.duration),
+    videoId: selectedSong.id.videoId,
+    rating: 0,
+    album: "",
+    image: "",
+    channelId: selectedSong.snippet.channelId
+  })
+  console.log(songs)
+  addSongToList();
+});
+
 function hideSearch(e) {
   var searchNode = $('#search-list');
   while (searchNode.firstChild) {
@@ -399,8 +436,73 @@ function hideSearch(e) {
   $('.black-overlay-2').classList.remove('active');
 }
 
+function convertYouTubeTimestamp(time) {
+  var timeArr = [];
+  console.log('HERE: '+time.match(/(\d*)S/))
+  if (time.match(/(\d*)H/) !== null) timeArr.push(time.match(/(\d*)H/)[1]);
+  if (time.match(/(\d*)M/) === null) timeArr.push("00");
+  else if (time.match(/(\d*)M/)[1].length === 2) timeArr.push(time.match(/(\d*)M/)[1]);
+  else timeArr.push("0"+time.match(/(\d*)M/)[1]);
+  if (time.match(/(\d*)S/) === null) timeArr.push("00");
+  else if (time.match(/(\d*)S/)[1].length === 2) timeArr.push(time.match(/(\d*)S/)[1]);
+  else timeArr.push("0"+time.match(/(\d*)S/)[1]);
+  return timeArr.join(':');
+}
+
+
+function addSongToList(){
+  var song = songs[songs.length-1];
+  if (song.image === "") {
+    getYouTubeChannelImage(songs[songs.length-1],song.channelId);
+  }
+  var tr = document.createElement('tr');
+  var songName = document.createElement('td');
+  songName.appendChild(document.createTextNode(song.title));
+  var artistName = document.createElement('td');
+  artistName.appendChild(document.createTextNode(song.artist));
+  var albumName = document.createElement('td');
+  albumName.appendChild(document.createTextNode(song.album));
+  var duration = document.createElement('td');
+  duration.appendChild(document.createTextNode(beautifySeconds(song.duration)));
+  var rating = document.createElement('td');
+  for (var i = 0; i < 5; i++) {
+    var star = document.createElement('i');
+    star.classList.add('fa')
+    if (song.rating > i) star.classList.add('fa-star');
+    else star.classList.add('fa-star-o');
+    rating.appendChild(star)
+  }
+  tr.appendChild(songName);
+  tr.appendChild(artistName);
+  tr.appendChild(albumName);
+  tr.appendChild(duration);
+  tr.appendChild(rating);
+  tr.id = 'song-' + (songs.length-1);
+  $('#song-table').appendChild(tr);
+  hideSearch();
+  scrollToBottom();
+}
+
+function getYouTubeChannelImage(song,channelId) {
+  $.fetch("/albumimage/youtube", {
+    method: "POST",
+    data: "channel=" + channelId,
+    responseType: "json"
+  }).then(function(data) {
+    song.image = data.response.snippet.thumbnails.medium.url;
+    updateSong(song);
+  }).catch(function(err) {
+    console.log(err)
+  })
+}
+function scrollToBottom(){
+ if(document.getElementById('table-scroll').scrollHeight - document.getElementById('table-scroll').scrollTop > document.getElementById('table-scroll').clientHeight) {
+  document.getElementById('table-scroll').scrollTop =
+  document.getElementById('table-scroll').scrollHeight - document.getElementById('table-scroll').clientHeight
+ }
+}
 window.onclick = function(e) {
-  if (activeSearch && e.target.parentNode.id !== 'search-list' && e.target.id !== 'search-field') {
+  if (activeSearch && e.target.parentNode.id !== 'search-list' && e.target.parentNode.parentNode.id !== 'search-list' && e.target.id !== 'search-field') {
     hideSearch(e);
   }
 }

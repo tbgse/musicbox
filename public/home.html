@@ -11,7 +11,7 @@ You haven't saved any playlists. Click here to save your current playlist.
   </div>
   <div class='main'>
     <div class='searchbar'><div class='menu-buttons'><div class='playlist-button' id='playlist-button'><i class='fa fa-music'></i> My Playlists</div></div><div class='search-input'><input class='search' placeholder='Search for songs, artists, albums...' id='search-field'><div class='search-results'>
-      <ul id='search-list'></ul>
+      <table id='search-list'></table>
     </div></div></div>
     <div class='album-container'>
       <div class='album-content-overlay'>
@@ -33,7 +33,7 @@ You haven't saved any playlists. Click here to save your current playlist.
             <td>Rating</td>
           </tr>
         </table>
-      <div class='table-wrapper'>
+      <div class='table-wrapper' id='table-scroll'>
       <table class='song-table'>
         <tbody id='song-table'>
         </tbody>
