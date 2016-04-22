@@ -15,6 +15,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(__dirname+'/public'))
 
+youTube.addParam('embeddable', true);
+youTube.addParam('type', 'video');
+
 app.post('/search/youtube',function(req,res){
   console.log(req.body.search);
   youTube.search(req.body.search, 5, function(error, result) {
