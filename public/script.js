@@ -14,7 +14,6 @@ var activeSongDuration = 249;
 var songs = [{
   title: "Flip",
   artist: "Glass Animals",
-  album: "Zaba",
   duration: 214,
   rating: 4,
   image: "https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg",
@@ -22,7 +21,6 @@ var songs = [{
 }, {
   title: "Black Mambo",
   artist: "Glass Animals",
-  album: "Zaba",
   duration: 249,
   rating: 3,
   image: "https://upload.wikimedia.org/wikipedia/en/3/32/Glass_animals_zaba.jpg",
@@ -30,7 +28,6 @@ var songs = [{
 }, {
   title: "Stay Close",
   artist: "Flume",
-  album: "Flume",
   duration: 176,
   rating: 5,
   image: "https://upload.wikimedia.org/wikipedia/en/8/8e/Flume_album_artwork.jpg",
@@ -38,7 +35,6 @@ var songs = [{
 }, {
   title: "Loud Places",
   artist: "Romy, Jamie xx",
-  album: "In Colour",
   duration: 283,
   rating: 4,
   image: "https://upload.wikimedia.org/wikipedia/en/c/c2/Jamie_xx_-_In_Colour.png",
@@ -46,7 +42,6 @@ var songs = [{
 }, {
   title: "You & Me (Flume Remix)",
   artist: "Disclosure, Flume",
-  album: "Settle",
   duration: 280,
   rating: 5,
   image: "https://upload.wikimedia.org/wikipedia/en/7/76/Disclosure_-_Settle.png",
@@ -54,15 +49,6 @@ var songs = [{
 }, {
   title: "Retrograde",
   artist: "James Blake",
-  album: "Overgrown",
-  duration: 214,
-  rating: 3,
-  image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png",
-  videoId: "6p6PcFFUm5I"
-}, {
-  title: "Retrograde",
-  artist: "James Blake",
-  album: "Overgrown",
   duration: 214,
   rating: 3,
   image: "https://upload.wikimedia.org/wikipedia/en/d/de/James_Blake_-_Overgrown_album_cover.png",
@@ -74,8 +60,6 @@ songs.forEach(function(song, num) {
   songName.appendChild(document.createTextNode(song.title));
   var artistName = document.createElement('td');
   artistName.appendChild(document.createTextNode(song.artist));
-  var albumName = document.createElement('td');
-  albumName.appendChild(document.createTextNode(song.album));
   var duration = document.createElement('td');
   duration.appendChild(document.createTextNode(beautifySeconds(song.duration)));
   var rating = document.createElement('td');
@@ -88,7 +72,6 @@ songs.forEach(function(song, num) {
   }
   tr.appendChild(songName);
   tr.appendChild(artistName);
-  tr.appendChild(albumName);
   tr.appendChild(duration);
   tr.appendChild(rating);
   tr.id = 'song-' + num;
@@ -420,7 +403,6 @@ $.delegate($("#search-list"),"click","tr",function(e){
     duration: convertYouTubeTimestamp(selectedSong.duration),
     videoId: selectedSong.id.videoId,
     rating: 0,
-    album: "",
     image: "",
     channelId: selectedSong.snippet.channelId
   })
@@ -460,8 +442,6 @@ function addSongToList(){
   songName.appendChild(document.createTextNode(song.title));
   var artistName = document.createElement('td');
   artistName.appendChild(document.createTextNode(song.artist));
-  var albumName = document.createElement('td');
-  albumName.appendChild(document.createTextNode(song.album));
   var duration = document.createElement('td');
   duration.appendChild(document.createTextNode(beautifySeconds(song.duration)));
   var rating = document.createElement('td');
@@ -474,7 +454,6 @@ function addSongToList(){
   }
   tr.appendChild(songName);
   tr.appendChild(artistName);
-  tr.appendChild(albumName);
   tr.appendChild(duration);
   tr.appendChild(rating);
   tr.id = 'song-' + (songs.length-1);

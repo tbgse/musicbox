@@ -380,10 +380,19 @@ body.active {
 .song-table tr:first-of-type td {
   padding:10px;
 }
-.song-table tr td:first-of-type {
+.song-table tr td:first-of-type,.table-head tr td:first-of-type {
   padding-left:80px;
+  width: 40%;
 }
-
+.song-table tr td:nth-child(2).table-head tr td:nth-child(2) {
+  width: 30%;
+}
+.song-table tr td:nth-child(3).table-head tr td:nth-child(3) {
+  width: 15%;
+}
+.song-table tr td:nth-child(4).table-head tr td:nth-child(4) {
+  width: 15%;
+}
 .selected-song {
   background:#334;
 }
